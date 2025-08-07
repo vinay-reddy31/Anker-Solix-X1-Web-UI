@@ -53,9 +53,6 @@ export default function PowerTrifecta() {
         />
 
         {/* Overlay (only on hover) */}
-        {hoverPoint !== null && (
-            <div className="absolute inset-0 bg-black bg-opacity-15 transition-opacity duration-500"></div>
-        )}
 
         {/* Hotspots */}
         {points.map((point) => (
@@ -64,6 +61,10 @@ export default function PowerTrifecta() {
             className="absolute"
             style={{ top: point.y, left: point.x, transform: "translate(-50%, -50%)" }}
           >
+            {/* Local circle overlay on hover */}
+            {hoverPoint === point.id && (
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-20 blur-sm z-0 pointer-events-none transition-all duration-300"></div>
+            )}
             <button
               onClick={() => togglePoint(point.id)}
               onMouseEnter={() => setHoverPoint(point.id)}
@@ -71,6 +72,7 @@ export default function PowerTrifecta() {
               className={`w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
                 activePoint === point.id ? "bg-white text-black" : "bg-cyan-400 text-white animate-pulse"
               }`}
+              style={{ position: 'relative', zIndex: 1 }}
             >
               {activePoint === point.id ? "-" : "+"}
             </button>
